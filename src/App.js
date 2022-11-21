@@ -1,5 +1,10 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState, useEffect } from 'react';
+import wordList from "./words.json";
+import colorCheck from './misc/colorCheck';
+import Message from './component/message/message';
+
+const scoreLegend = [10, 8, 6, 4, 2, 1];
 
 export default function App() {
   const [index, setIndex] = useState(0);
@@ -14,6 +19,7 @@ export default function App() {
   const [guess, setGuess] = useState("");
   const [colors, setColors] = useState([]);
   const [keyColors, setKeyColors] = useState({});
+  const [rowAnim, setRowAnim] = useState(["","","","","",""]);
 
   const allWords = [];
   wordList.everyword.map((val, i) => { allWords.push(val.toLocaleUpperCase()) });
@@ -65,7 +71,7 @@ export default function App() {
 
       if (colorRow.every(el => el === "green")) {
         setScore(prev => prev + scoreLegend[index]);
-        console.log(score);
+        sendMessage(`Correct! +${scoreLegend[index]}`)
         setTimeout(resetBoard, 2000);
       }
       else if (index == 6) {
@@ -76,9 +82,21 @@ export default function App() {
 
     }
     else {
-      // updateIds(index, "shake");
-      // sendMessage("Not in Word List")
+      setCurrentRowAnim("shake");
+      sendMessage("Not in Word List")
     }
+  }
+
+  const clearRowAnim = (i)=>{
+    let temp = [...rowAnim];
+    temp[i] = "";
+    setRowAnim(temp);
+  }
+
+  const setCurrentRowAnim = (anim) => {
+    let temp = [...rowAnim];
+    temp[index] = anim;
+    setRowAnim(temp);
   }
 
   useEffect(() => {
@@ -123,22 +141,90 @@ export default function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <main className='center'>
+        <Message clearMessage={() => { sendMessage("") }}>{message}</Message>
+        <h1>Score:  {score}</h1>
+        <GameBoard  index={index} guess={guess} words={words} colors={colors} rowAnim={rowAnim} clearRowAnim={clearRowAnim}/>
+        <Qwerty keyPress={updateGuess} enter={enter} back={backtrackGuess} keyColors={keyColors} />
+      </main>
+
     </div>
   );
 }
 
-export default App;
+function Tile(props) {
+
+  return (
+    <div onClick={props.onClick} id={props.correct? "correct": props.color ? "tileFlip" : ""} className={"tile"} key={props.key} style={{ "--index": props.index, "--color": `var(--${props.color})` }}>
+      <span>{props.children}</span>
+    </div>
+  );
+}
+
+function Key(props) {
+
+  return (
+    <div onClick={props.onClick} id={props.color ? props.color : ""} className={"tile mini"} key={props.key} style={{ "--index": props.index, fontSize: props.fontSize, "--widthmod": props.width ? props.width : 1 }}>
+      <span>{props.children}</span>
+    </div>
+  );
+}
+
+function TileRow(props) {
+  const word = props.word ? Array.from(props.word) : ["", "", "", "", ""];
+  const colors = props.colors ? props.colors : ["", "", "", "", ""];
+  const [colorState, setColorState] = useState(props.colors ? props.colors : null)
+
+  return (
+    <div id={props.rowAnim} className='tilerow' onAnimationEnd={props.onAnimationEnd}>
+      {colors.map((color, index) => { return <Tile color={color} index={index}>{word[index]}</Tile> })}
+    </div>
+  )
+}
+
+function GameBoard(props) {
+  const words = props.words;
+  const index = props.index;
+  const guess = props.guess;
+
+  let display = [];
+  for (let i = 0; i < 6; i++) {
+    display.push(<TileRow rowAnim={props.rowAnim[i]} word={i === index ? guess : i < index ? words[i] : ""} colors={props.colors[i] ? props.colors[i] : ""} onAnimationEnd={()=>{props.clearRowAnim(i)}}/>);
+  }
+
+  return (
+    <section id={props.anim?"flips":""} className='gameboard'>
+      {display}
+    </section>
+  )
+}
+
+
+function Qwerty(props) {
+  const update = props.keyPress;
+  const keys = [
+    ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+    ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+    ["z", "x", "c", "v", "b", "n", "m"]
+  ]
+
+  return (
+    <div className='qwerty'>
+      <div className='tilerow'>
+        {keys[0].map((item, index) => { return <Key color={props.keyColors[item] ? props.keyColors[item] : ""} onClick={() => { update(item) }} mini={true}>{item}</Key> })}
+      </div>
+      <div className='tilerow'>
+        {keys[1].map((item, index) => { return <Key color={props.keyColors[item] ? props.keyColors[item] : ""} onClick={() => { update(item) }} mini={true}>{item}</Key> })}
+
+      </div>
+      <div className='tilerow'>
+        <Key mini={true} width={2} fontSize="22px" onClick={props.enter}>Enter</Key>
+        {keys[2].map((item, index) => { return <Key color={props.keyColors[item] ? props.keyColors[item] : ""} onClick={() => { update(item) }} mini={true}>{item}</Key> })}
+        <Key mini={true} width={1.5} onClick={props.back}>⌫</Key>
+
+      </div>
+    </div>
+
+
+  )
+}

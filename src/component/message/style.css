@@ -1,0 +1,38 @@
+
+
+.toast{
+    position: fixed;
+    left:40%;
+    top: 50px;
+    min-width: 20%;
+    
+    background-color: var(--tileColor);
+    color: white;
+    border: white 2px solid;
+    border-radius: 25px;
+
+    text-align: center;
+
+    z-index: 1000;
+
+    opacity: 0;
+    visibility: hidden;
+}
+
+#reveal{
+    animation: reveal 3s;
+    
+}
+
+@keyframes reveal {
+    0%, 100%{
+        opacity: 0;
+        visibility: visible;
+    }
+
+    15%, 85%{
+        opacity: 1;
+        visibility: visible;
+    }
+
+}
