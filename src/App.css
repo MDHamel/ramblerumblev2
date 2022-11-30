@@ -1,5 +1,8 @@
 .App {
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .center{
@@ -7,8 +10,15 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-
+  width: 1000px;
   min-height: 100vh;
+}
+
+.gameUI{
+  width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 h1{
@@ -137,7 +147,7 @@ h1{
 }
 
 #shake{
-  animation: shake 1s;
+  animation: shake .65s alternate;
 }
 
 #flips{
@@ -150,10 +160,10 @@ h1{
   0%,100%{
     translate: none;
   }
-  15%,45%,75%{
+  20%,60%{
     translate: 15px;
   }
-  30%,60%,90%{
+  40%, 80%{
     translate: -15px;
   }
   

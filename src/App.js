@@ -8,17 +8,66 @@ import { ControllerContext } from './context';
 export default function App() {
   const context = useContext(ControllerContext);
 
+  useEffect(() => {
+    context.setTimedMode(true);
+
+    if (!context.gameStarted) {
+      context.startGame();
+    }
+
+    return () => { }
+  }, [])
+
+
+
+
   return (
     <div className="App">
       <main className='center'>
         <Message />
-        <h1>Score:  {context.score}</h1>
-        <GameBoard  />
+        <aside className='gameUI'>
+          <Timer />
+          <h1>Score:  {context.score}</h1>
+        </aside>
+        <GameBoard />
         <Qwerty />
       </main>
-
     </div>
   );
+}
+
+function Timer() {
+  const context = useContext(ControllerContext);
+
+  const [time, setTime] = useState(-1);
+  const [timer, setTimer] = useState(); //time update interval
+  const minutes = Math.floor(time / 60);
+  const seconds = time % 60;
+
+  if(context.isTimed && time === 0 && !context.gameEnded){
+    context.endGame();
+  }
+
+  useEffect(() => {
+    if(context.gameStarted){
+      setTime(context.isTimed?300:0)
+      setTimer(setInterval(() => {
+        if (!context.gameEnded)
+          setTime(prev => prev + (context.isTimed ? -1 : 1))
+      }, 1000));
+    }
+    
+    return () => {}
+  }, [context.gameStarted])
+
+  useEffect(() => {
+    clearInterval(timer);
+    return () => {clearInterval(timer); }
+  }, [context.gameEnded])
+
+  return (
+    <h1>Time: {minutes}:{seconds < 10 ? "0" + seconds : seconds}</h1>
+  )
 }
 
 function Tile(props) {
@@ -26,7 +75,7 @@ function Tile(props) {
 
   return (
     <div id={context.tileAnim[props.rowIndex]} className={"tile"} key={props.key} style={{ "--index": props.index, "--color": `var(--${context.tileColor[props.rowIndex][props.index]})` }}>
-      <span>{context.words[props.rowIndex]?context.words[props.rowIndex].charAt(props.index):""}</span>
+      <span>{context.words[props.rowIndex] ? context.words[props.rowIndex].charAt(props.index) : ""}</span>
     </div>
   );
 }
@@ -44,16 +93,16 @@ function TileRow(props) {
   const context = useContext(ControllerContext);
   const index = props.index;
 
-  const word = context.words[props.index] ? Array.from(props.word) : ["", "", "", "", ""];
+  const word = context.words[props.index];
 
   let display = [];
 
-  for(let i = 0; i < 5; i++){
-    display.push(<Tile rowIndex={index} index={i}>{word[i]?word[i]:""}</Tile>);
+  for (let i = 0; i < 5; i++) {
+    display.push(<Tile rowIndex={index} index={i}>{word[i] ? word[i] : ""}</Tile>);
   }
 
   return (
-    <div id={context.rowAnim[index]} className='tilerow' style={{ "--index": index}} onAnimationEnd={()=>{context.clearRowAnim()}}>
+    <div id={context.rowAnim[index]} className='tilerow' style={{ "--index": index }} onAnimationEnd={() => { context.clearRowAnim() }}>
       {display}
     </div>
   )
@@ -72,7 +121,7 @@ function GameBoard(props) {
   }
 
   return (
-    <section id={props.anim?"flips":""} className='gameboard'>
+    <section id={props.anim ? "flips" : ""} className='gameboard'>
       {display}
     </section>
   )
