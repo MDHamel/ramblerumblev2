@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/static/css/main.0f64e762.css",
-    "main.js": "/static/js/main.0e4b5415.js",
-    "index.html": "/index.html",
-    "main.0f64e762.css.map": "/static/css/main.0f64e762.css.map",
-    "main.0e4b5415.js.map": "/static/js/main.0e4b5415.js.map"
+    "main.css": "/ramblerumblev2/static/css/main.0f64e762.css",
+    "main.js": "/ramblerumblev2/static/js/main.0e4b5415.js",
+    "index.html": "/ramblerumblev2/index.html",
+    "main.0f64e762.css.map": "/ramblerumblev2/static/css/main.0f64e762.css.map",
+    "main.0e4b5415.js.map": "/ramblerumblev2/static/js/main.0e4b5415.js.map"
   },
   "entrypoints": [
     "static/css/main.0f64e762.css",
