@@ -1,0 +1,77 @@
+.game {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 1000px;
+    min-height: 100vh;
+}
+
+.gameUI {
+    width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+h1 {
+    color: var(--font-color);
+}
+
+.back{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+
+    background-color: #111a;
+
+    z-index: 1000;
+}
+
+#countdown{
+    position: fixed;
+    margin: auto;
+
+    width: fit-content;
+    height: fit-content;
+
+    top:20vh;
+    left:0;
+    right:0;
+
+
+    font-size: 300px;
+
+    animation: countdown 1s forwards infinite;
+}
+
+#hide{
+    visibility: hidden;
+}
+
+@keyframes countdown {
+    0%{
+        opacity: 0;
+        scale: .1;
+    }
+
+    50%{
+        opacity: 1;
+        scale: 1;
+    }
+    70%{
+        opacity: 1;
+    }
+
+    100%{
+        opacity: 0;
+        scale: 2;
+    }
+}

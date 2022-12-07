@@ -4,11 +4,12 @@ import './index.css';
 import App from './App';
 import Test from './test';
 import { Controller } from './context';
+import Game from './pages/game';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Controller>
-    <App />
+    {document.location.pathname.split("/")[2]?<Game />:<App />}
   </Controller>
 );
 

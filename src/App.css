@@ -1,185 +1,27 @@
-.App {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.center{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 1000px;
-  min-height: 100vh;
-}
-
-.gameUI{
-  width: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-h1{
-  color: var(--font-color);
-}
-
-.tile{
-  --size: 70px;
-  position: relative;
-  width: var(--size);
-  min-height: var(--size);
-  max-height: var(--size);
-
-  margin: calc(var(--size) * .072);
-
-  text-align: center;
-  font-size: calc(var(--size) * .62);
-  font-weight: bold;
-  color: var(--font-color);
-  text-transform: capitalize;
-
-  background-color: var(--tileColor);
-  border-radius: calc(var(--size) * .1);
-  line-height: calc(var(--size)*.9);
-
-  user-select: none;
-  transition: background-color 1s;
-}
-
-
-.tile.mini{
-  --size:40px;
-  --diff: 1.4;
-  min-height: calc(var(--size) * var(--diff));
-  max-height: calc(var(--size) * var(--diff));
-  line-height: calc(var(--size) * var(--diff));
-
-  width: calc(var(--size) * var(--widthmod));
-  font-size: 22px;
-
-
-  cursor: pointer;
-  filter:brightness(1);
-  transition: filter .75s;
-
-}
-
-.tile.mini:active,.tile.wide:active { 
-  filter:brightness(2);
-  transition: filter 0s;
-  
-}
-
-@keyframes lightup {
-  0%{
-    filter: brightness(1);
-  }
-  75%{
-    filter: brightness(2);
-  }
-  0%{
-    filter: brightness(1);
-  }
-}
-
-.tilerow{
-  position: relative;
-  display: flex;
-}
-
-
-#tileFlip{
-  --delay: calc(var(--index) * 0.085s);
-  background-color: var(--tileColor);
-  animation: tileFlips .6s var(--delay) forwards;
-}
-
-@keyframes tileFlips{
-  0%{
-    transform: rotateY(0);
-  }
-  49%{
-    transform: rotateY(90deg);
-    background-color: var(--tileColor);
-
-  }
-  50%{
-    background-color: var(--color);
-  }
-  51%{
-    transform: rotateY(90deg);
-  }
-  100%{
-    transform: rotateY(0);
-    background-color: var(--color);
-
-  }
-}
-
-.qwerty{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
+.App{
   margin-top: 50px;
 }
 
-#red{
-  background-color: var(--red);
+#big {
+  --size: 140px;
+  background-color: var(--color);
+  animation: spiiin 5s linear  infinite;
+  animation-delay: calc(var(--rand) + 1s);
 }
 
-#green{
-  background-color: var(--green);
-
-}
-
-#blue{
-  background-color: var(--blue);
-
-}
-
-#yellow{
-  background-color: var(--yellow);
+.row {
+  display: flex;
+  justify-content: center;
 
 }
 
-#shake{
-  animation: shake .65s alternate;
-}
-
-#flips{
-  --delay: calc(var(--index) * 0.05s);
-  animation: flips 1s var(--delay);
-}
-
-
-@keyframes shake {
-  0%,100%{
-    translate: none;
-  }
-  20%,60%{
-    translate: 15px;
-  }
-  40%, 80%{
-    translate: -15px;
-  }
-  
-}
-
-@keyframes flips {
-  0%{
+@keyframes spiiin {
+  0%,10%,20% {
     transform: rotateX(0);
   }
-  50%{
+
+  5%,15%{
     transform: rotateX(90deg);
-  }
-  51%{
-    transform: rotateX(90deg);
-  }
-  100%{
-    transform: rotateX(0);
   }
 }
+

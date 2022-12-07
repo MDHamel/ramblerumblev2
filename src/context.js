@@ -4,7 +4,6 @@ import colorCheck from './misc/colorCheck';
 
 const scoreLegend = [10, 8, 6, 4, 2, 1, -5];
 const resetTimeout = 1250;
-const gameTime = 300;
 
 export const ControllerContext = createContext();
 
@@ -19,6 +18,7 @@ export function Controller(props) {
 
     const [words, setWords] = useState(Array(6).fill(""));
 
+
     const [tileColor, setColors] = useState(Array(6).fill(Array(5).fill("")));
     const [tileAnim, setAllTileAnim] = useState(["", "", "", "", ""]);
     const [rowAnim, setAllRowAnim] = useState(["", "", "", "", "", ""]);
@@ -28,31 +28,33 @@ export function Controller(props) {
 
     const [disabled, setDisable] = useState(false);
 
+    const [finalTime, setFinalTime] = useState(0);
+    const [history, setHistory] = useState("")
 
     const allWords = [];
     wordList.everyword.map((val, i) => { allWords.push(val) });
     const commonWords = [];
     wordList.common.map((val, i) => { commonWords.push(val) });
 
+    console.log("AA")
+
     // const [ans, setAns] = useState("pizza");
     const [ans, setAns] = useState(wordList.common[Math.floor(Math.random() * commonWords.length)]);
-    
-    console.log(ans);
-    console.log(index);
 
-    const startGame = () =>{
+    const startGame = () => {
         setGameStart(true);
     }
 
-    const endGame = () =>{
+    const endGame = () => {
         setGameEnd(true);
         setMessage("Game Over");
-        
+
     }
 
     const updateGuess = (char) => {
         if (words[index].length < 5) {
-            setWord(words[index]+char);
+            setWord(words[index] + char);
+            
             //used to update the line after making changes
             setRowAnim("", index);
         } else {
@@ -60,17 +62,15 @@ export function Controller(props) {
         }
     };
 
-    const setWord=(word, i=index)=>{
-        setWords(temp => {temp[i] = word;return temp});
-            
-        
+    const setWord = (word, i = index) => {
+        setWords(temp => { temp[i] = word; return temp });
     }
 
     const backtrackGuess = () => {
         if (words[index].length > 0) {
-            setWords(temp=>{temp[index]=temp[index].substring(0,temp[index].length-1);return temp});
+            setWords(temp => { temp[index] = temp[index].substring(0, temp[index].length - 1); return temp });
             //used to update the line after making changes
-        setRowAnim("", index);
+            setRowAnim("", index);
         }
         else {
             setRowAnim("shake", index);
@@ -78,17 +78,39 @@ export function Controller(props) {
     };
 
     const enter = () => {
-        if(words[index].length < 5){
+        if (words[index].length < 5) {
             setRowAnim("shake", index);
         }
         else if (wordList.everyword.includes(words[index].toLocaleLowerCase())) {
 
-            
+
 
             //flip word
             let colorRow = colorCheck(ans, words[index].toLocaleLowerCase());
-            let tempColors = [... tileColor];
+            let tempColors = [...tileColor];
+
             tempColors[index] = colorRow;
+
+            colorRow.forEach((val, index) => {
+                let square = "";
+                switch (val) {
+                    case "red":
+                        square = "🟥";
+                        break
+                    case "green":
+                        square = "🟩";
+                        break
+                    case "yellow":
+                        square = "🟨"
+                        break
+                    case "blue":
+                        square = "🟦"
+                        break
+                }
+
+
+                setHistory(prev =>prev+square)
+            })
 
             setColors(tempColors);
             setTileAnim("tileFlip");
@@ -100,28 +122,35 @@ export function Controller(props) {
                 }
 
             });
-            
+
             setKeyColors(newKeyColors);
             setIndex(prev => prev + 1);
 
             if (colorRow.every(el => el === "green")) {
                 setScore(prev => prev + scoreLegend[index]);
                 setMessage(`Correct! +${scoreLegend[index]}`)
+                setHistory(prev =>prev+`\tCorrect! +${scoreLegend[index]}`)
+
                 setDisable(true);
                 setTimeout(resetBoard, resetTimeout);
             }
-            else if(index==5){
-                if(isTimed){
-                    setScore(prev => prev + scoreLegend[index+1]);
-                    setMessage(`You Bust! ${scoreLegend[index+1]}`)
+            else if (index == 5) {
+                if (isTimed) {
+                    setScore(prev => prev + scoreLegend[index + 1]);
+                    setMessage(`You Bust! ${scoreLegend[index + 1]}`)
+                    setHistory(prev =>prev+`You Bust ${scoreLegend[index]}`)
+
                     setTimeout(resetBoard, resetTimeout);
                 }
-                else{
+                else {
+                    setHistory(prev =>prev+`\tGame Over`)
                     
                     endGame();
                 }
-                    
+
             }
+            setHistory(prev =>prev+"\n")
+
         }
         else {
             setRowAnim("shake", index);
@@ -140,7 +169,7 @@ export function Controller(props) {
     }
 
     const setTileAnim = (anim) => {
-        let temp = [... tileAnim];
+        let temp = [...tileAnim];
         temp[index] = anim;
         setAllTileAnim(temp);
     }
@@ -150,22 +179,22 @@ export function Controller(props) {
         setIndex(0);
 
         //resets colors and words when tile rows are flipped over, at .5s the row is at the apex of the flip
-        setTimeout(()=>{
+        setTimeout(() => {
             setAllTileAnim(Array(6).fill(""));
             setWords(Array(6).fill(""))
         }, 500)
         //after the full second, remove animation
-        setTimeout(()=>{setAllRowAnim(Array(6).fill("")); setDisable(false)}, 1000)
-        
+        setTimeout(() => { setAllRowAnim(Array(6).fill("")); setDisable(false) }, 1000)
+
         setColors(Array(6).fill(Array(5).fill("")));
         setKeyColors({});
-        
+
         setAns(commonWords[Math.floor(Math.random() * commonWords.length)]);
     }
 
     var keylistener = (e) => {
         const key = e.key.toLowerCase();
-        if(disabled){
+        if (disabled) {
             return
         }
 
@@ -185,25 +214,25 @@ export function Controller(props) {
 
 
     useEffect(() => {
-        if(gameStarted && !disabled && !gameEnded){
+        if (gameStarted && !disabled && !gameEnded) {
             window.addEventListener("keydown", keylistener);
-        }        
-        return () => { window.removeEventListener("keydown", keylistener);};
+        }
+        return () => { window.removeEventListener("keydown", keylistener); };
     }, [gameStarted, keylistener, disabled]);
 
     //end game clean up
-    useEffect(()=>{
-        if(gameEnded){
+    useEffect(() => {
+        if (gameEnded) {
             window.removeEventListener("keydown", keylistener);
         }
-            
-    },[gameEnded])
 
-    const clearMessage = ()=>{setMessage("")}
+    }, [gameEnded])
 
-    
+    const clearMessage = () => { setMessage("") }
 
-    const value = { updateGuess, backtrackGuess, enter, words, score, tileColor, tileAnim, rowAnim, keyColors, message, clearMessage, clearRowAnim, setTimedMode, startGame, endGame, gameStarted, gameEnded, isTimed }
+
+
+    const value = { updateGuess, backtrackGuess, enter, words, score, tileColor, tileAnim, rowAnim, keyColors, message, clearMessage, clearRowAnim, setTimedMode, startGame, endGame, gameStarted, gameEnded, isTimed, finalTime, setFinalTime, history }
 
     return (
         <ControllerContext.Provider value={value}>

@@ -20,11 +20,11 @@
 }
 
 #reveal{
-    animation: reveal 3s;
+    animation: ghost 3s;
     
 }
 
-@keyframes reveal {
+@keyframes ghost {
     0%, 100%{
         opacity: 0;
         visibility: visible;
