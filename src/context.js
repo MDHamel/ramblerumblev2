@@ -36,7 +36,6 @@ export function Controller(props) {
     const commonWords = [];
     wordList.common.map((val, i) => { commonWords.push(val) });
 
-    console.log("AA")
 
     // const [ans, setAns] = useState("pizza");
     const [ans, setAns] = useState(wordList.common[Math.floor(Math.random() * commonWords.length)]);
