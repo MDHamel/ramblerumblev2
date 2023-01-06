@@ -12,7 +12,7 @@ export default function Game() {
     const context = useContext(ControllerContext);
   
     useEffect(() => {
-      const gametype = document.location.pathname.split("/")[1];
+      const gametype = document.location.pathname.split("/")[2];
       context.setTimedMode(gametype === "timed");
   
   

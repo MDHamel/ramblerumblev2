@@ -25,8 +25,8 @@ export default function App() {
       </section>
       <div style={{ minHeight: "12vh" }} />
       <section className='row'>
-        <Button href="/timed">Timed Challenge</Button>
-        <Button href="/hiscore">High Score</Button>
+        <Button href="/#/timed">Timed Challenge</Button>
+        <Button href="/#/hiscore">High Score</Button>
         
       </section>
       <div style={{ minHeight: "5vh" }} />
