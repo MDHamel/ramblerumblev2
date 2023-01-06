@@ -2,8 +2,6 @@ import './App.css';
 import Button from './component/button/Button';
 
 
-console.log(document.location.origin)
-
 export default function App() {
 
   console.log(document.location.origin);
@@ -27,8 +25,8 @@ export default function App() {
       </section>
       <div style={{ minHeight: "12vh" }} />
       <section className='row'>
-        <Button href="/ramblerumblev2/timed">Timed Challenge</Button>
-        <Button href="/ramblerumblev2/hiscore">High Score</Button>
+        <Button href="/timed">Timed Challenge</Button>
+        <Button href="/hiscore">High Score</Button>
         
       </section>
       <div style={{ minHeight: "5vh" }} />
