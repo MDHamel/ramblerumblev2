@@ -9,7 +9,7 @@ import Game from './pages/game';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Controller>
-    {document.location.pathname.split("/")[2]?<Game />:<App />}
+    {document.location.hash.split("/")[1]?<Game />:<App />}
   </Controller>
 );
 

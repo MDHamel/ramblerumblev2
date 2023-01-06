@@ -1,12 +1,19 @@
+import { useState } from 'react';
 import './App.css';
 import Button from './component/button/Button';
 
+import { HowToPlay } from './component/endgame/endgame';
+
 
 export default function App() {
+  const [showHowTo, setShow] = useState("");
+  const onhowto = () =>{
+    setShow("reveal quick")
+  }
 
-  console.log(document.location.origin);
   return (
     <div className='App'>
+      <HowToPlay reveal={showHowTo} setState={setShow} />
       <section className='row'>
         <BigTile color="green">r</BigTile>
         <BigTile color="green">a</BigTile>
@@ -31,7 +38,7 @@ export default function App() {
       </section>
       <div style={{ minHeight: "5vh" }} />
       <section className='row'>
-        <Button>How to Play</Button>
+        <Button onClick={onhowto}>How to Play</Button>
       </section>
       
     </div>
