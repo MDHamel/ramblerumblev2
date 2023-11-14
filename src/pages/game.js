@@ -12,22 +12,21 @@ export default function Game() {
     const context = useContext(ControllerContext);
   
     useEffect(() => {
-      const gametype = document.location.hash.split("/")[1];
+      const gametype = document.location.pathname.split("/")[1];
       context.setTimedMode(gametype === "timed");
-  
   
       return () => { }
     }, [])
   
     return (
-      <div className="game">
+      <div className="game overflow-hidden">
         <Countdown />
         <main className='center'>
           <EndGame />
           <Message />
-          <aside className='gameUI'>
+          <aside className='gameUI mb-4 d-flex justify-content-evenly'>
             <Timer />
-            <h1>Score:  {context.score}</h1>
+            <h1 className='text-center me-5'>Score<br className='mb-2' />{context.score}</h1>
           </aside>
           <GameBoard />
           <Qwerty />
@@ -39,7 +38,7 @@ export default function Game() {
 
   function Countdown(){
     const context = useContext(ControllerContext);
-    const display = ["3", "2", "1", "GO!"]
+    const display = ["3", "2", "1", "GO"]
     const [count, setCount] = useState(0);
     const [id, setId] = useState("countdown");
     const [hide, setHide] = useState("")
@@ -55,7 +54,7 @@ export default function Game() {
 
     return(
       <div id={hide} className='back'>
-        <h1  id={id } onAnimationIteration={countdownHandler}>{display[count]}</h1>
+        <h1  id={id} className='translate-middle-y' onAnimationIteration={countdownHandler}>{display[count]}</h1>
       </div>
     )
   }

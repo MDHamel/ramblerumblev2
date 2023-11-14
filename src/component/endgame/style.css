@@ -1,6 +1,7 @@
 .backing {
     visibility: hidden;
     position: fixed;
+    left:0;
     width: 100vw;
     height: 100vh;
 }
@@ -28,17 +29,14 @@
     left: 0;
     right: 0;
     margin: auto;
-    width: 600px;
-    height: 700px;
+
+    max-height: 90vh;
 
     display: flex;
     flex-direction: column;
     box-shadow: 0px 0px 150px #444;
-    background-color: #333;
+    background-color: #2F3335;
     border-radius: 15px;
-    padding-top: 50px;
-    box-sizing: border-box;
-
 
     z-index: 1100;
 
@@ -46,27 +44,11 @@
     transition: box-shadow 4s 3.7s;
 }
 
-.plaque .row {
-    margin-top: 35px;
-}
-
-.plaque h1,h2 {
-    margin: auto;
-    padding: 0px 50px;
-    font-size: 24px;
-}
-
-.plaque h2{
-    font-size: 20px;
-    font-weight: 500;
-}
-
 .history {
-
-    background-color: #444;
+    background-color: #424247;
     margin: 10px auto;
-    width: 200px;
-    height: 230px;
+    width: 230px;
+    height: 530px;
     padding: 20px;
     white-space: pre-line;
     overflow-y: scroll;

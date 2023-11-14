@@ -71,7 +71,7 @@ export function Qwerty() {
     ]
 
     return (
-        <div className='qwerty'>
+        <div className='qwerty container'>
             <div className='tilerow'>
                 {keys[0].map((item, index) => { return <Key color={context.keyColors[item] ? context.keyColors[item] : ""} onClick={() => { context.updateGuess(item) }} mini={true}>{item}</Key> })}
             </div>

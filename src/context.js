@@ -82,8 +82,6 @@ export function Controller(props) {
         }
         else if (wordList.everyword.includes(words[index].toLocaleLowerCase())) {
 
-
-
             //flip word
             let colorRow = colorCheck(ans, words[index].toLocaleLowerCase());
             let tempColors = [...tileColor];
@@ -127,8 +125,8 @@ export function Controller(props) {
 
             if (colorRow.every(el => el === "green")) {
                 setScore(prev => prev + scoreLegend[index]);
-                setMessage(`Correct! +${scoreLegend[index]}`)
-                setHistory(prev =>prev+`\tCorrect! +${scoreLegend[index]}`)
+                setMessage(`Correct!\t+${scoreLegend[index]}`)
+                setHistory(prev =>prev+`\t\tCorrect!\t\t\t+${scoreLegend[index]}`)
 
                 setDisable(true);
                 setTimeout(resetBoard, resetTimeout);
@@ -142,7 +140,7 @@ export function Controller(props) {
                     setTimeout(resetBoard, resetTimeout);
                 }
                 else {
-                    setHistory(prev =>prev+`\tGame Over`)
+                    setHistory(prev =>prev+`\n\tGame Over`)
                     
                     endGame();
                 }

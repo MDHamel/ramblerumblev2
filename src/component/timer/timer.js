@@ -41,6 +41,6 @@ export default function Timer() {
     }, [context.gameEnded])
 
     return (
-        <h1>Time: {minutes}:{seconds < 10 ? "0" + seconds : seconds}</h1>
+        <h1 className='text-center ms-5'>Time<br className='mb-2' />{minutes}:{seconds < 10 ? "0" + seconds : seconds}</h1>
     )
 }

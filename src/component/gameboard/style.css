@@ -1,5 +1,5 @@
 .tile {
-    --size: 70px;
+    --size: 70px !important;
     position: relative;
     width: var(--size);
     min-height: var(--size);
@@ -22,7 +22,7 @@
 }
 
 .tile.mini {
-    --size: 40px;
+    --size: 45px !important;
     --diff: 1.4;
     min-height: calc(var(--size) * var(--diff));
     max-height: calc(var(--size) * var(--diff));
@@ -44,6 +44,24 @@
     transition: filter 0s, scale .1s;
     scale: .85;
 }
+
+@media screen and (max-width: 550px) {
+
+    .tile {
+        --size: 14vw !important;
+    }
+
+    .tile.mini {
+        --size: 8vw !important;
+    }
+}
+
+@media screen and (min-width: 551px) and (max-width: 999px) {
+    .tile.mini {
+        --size: 6vw !important;
+    }
+}
+
 
 @keyframes lightup {
     0% {
@@ -172,22 +190,25 @@
     }
 }
 
-#smoosh{
+#smoosh {
     animation: smoosh .25s linear;
 }
 
 @keyframes smoosh {
-    0%{
+    0% {
         scale: 1;
     }
-    40%{
+
+    40% {
         scale: .8;
     }
-    80%{
+
+    80% {
         scale: 1.1;
 
     }
-    100%{
-        scale:1;
+
+    100% {
+        scale: 1;
     }
 }

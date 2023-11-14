@@ -6,8 +6,10 @@ export default function Message(props){
   const context = useContext(ControllerContext);
 
 
+
+
     return(
-        <div id={context.message?"reveal":""} className="toast" onAnimationEnd={context.clearMessage}>
+        <div id={context.message?"reveal":""} className="msg" onAnimationEnd={context.clearMessage}>
             <h1>{context.message}</h1>
         </div>
     )

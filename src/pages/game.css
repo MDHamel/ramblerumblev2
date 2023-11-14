@@ -15,7 +15,7 @@
 }
 
 .gameUI {
-    width: 300px;
+    width: 750px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -42,12 +42,11 @@ h1 {
     width: fit-content;
     height: fit-content;
 
-    top:20vh;
+    top: 40vh;
     left:0;
     right:0;
 
-
-    font-size: 300px;
+    font-size: 25vh;
 
     animation: countdown 1s forwards infinite;
 }
@@ -66,12 +65,12 @@ h1 {
         opacity: 1;
         scale: 1;
     }
-    70%{
+    65%{
         opacity: 1;
     }
 
     100%{
         opacity: 0;
-        scale: 2;
+        scale: 1.75;
     }
 }

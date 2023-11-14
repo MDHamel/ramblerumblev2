@@ -5,11 +5,38 @@ import App from './App';
 import Test from './test';
 import { Controller } from './context';
 import Game from './pages/game';
+import {
+  createBrowserRouter,
+  RouterProvider
+} from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+let router = createBrowserRouter([
+  {
+    path: "/",
+    Component() {
+      return <App></App>;
+    },
+  },
+  {
+    path: "/timed",
+    Component() {
+      return <Game />;
+    },
+  },
+  {
+    path: "/hiscore",
+    Component() {
+      return <Game />;
+    },
+  }
+]);
+
+
 root.render(
   <Controller>
-    {document.location.hash.split("/")[1]?<Game />:<App />}
+    <RouterProvider router={router} fallbackElement={<p>Loading...</p>} />
   </Controller>
 );
 
