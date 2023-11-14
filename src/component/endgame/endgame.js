@@ -1,6 +1,7 @@
 import "./style.css";
 import { useEffect, useState, useContext } from "react";
 import { ControllerContext } from "../../context";
+import { Link } from "react-router-dom";
 
 export default function EndGame() {
     const context = useContext(ControllerContext);
@@ -31,7 +32,7 @@ export default function EndGame() {
                 </div>
                 <div className="d-flex justify-content-evenly my-5">
                     <button className='btn btn-lg btn-outline-light fw-bold text-center col-5 py-3' onClick={() => document.location.reload()}>Play Again</button>
-                    <button className='btn btn-lg btn-outline-light fw-bold text-center col-5 py-3' href="#">Main Menu</button>
+                    <Link className='btn btn-lg btn-outline-light fw-bold text-center col-5 py-3' to="/">Main Menu</Link>
                 </div>
 
             </aside>

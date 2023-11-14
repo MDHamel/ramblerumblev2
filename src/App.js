@@ -3,6 +3,7 @@ import './App.css';
 
 
 import { HowToPlay } from './component/endgame/endgame';
+import { Link } from 'react-router-dom';
 
 
 export default function App() {
@@ -36,8 +37,8 @@ export default function App() {
         </section>
 
         <div className='d-flex justify-content-evenly'>
-          <a type='button' className='btn btn-lg btn-outline-light fw-bold text-center col-5 py-3' href='/timed'>Timed Trial</a>
-          <a type='button' className='btn btn-lg btn-outline-light fw-bold text-center col-5 py-3' href="/hiscore">High Score</a>
+          <Link type='button' className='btn btn-lg btn-outline-light fw-bold text-center col-5 py-3' to='/timed'>Timed Trial</Link>
+          <Link type='button' className='btn btn-lg btn-outline-light fw-bold text-center col-5 py-3' to="/hiscore">High Score</Link>
         </div>
 
         <div className='d-flex justify-content-center'>
